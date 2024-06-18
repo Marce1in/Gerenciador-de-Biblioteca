@@ -1,17 +1,22 @@
-class Main {
+import Livro from "./classes/Livro"
+import Membro from "./classes/Membro"
+import Emprestimo from "./classes/Emprestimo"
 
+const livros: Livro[] = []
+const membros: Membro[] = []
+const emprestimos: Emprestimo[] = []
 
+function main(){
 
-    public static init(){
-        console.log("teste")       
-    }
-
-    private carregar_dados(){
-
-    }
-    private salvar_dados(){
-
-    }
 }
 
-Main.init()
+//Carrega os dados dos arquivos dentro do diretório "database" em arrays
+function carregar_dados(){
+
+}
+//Salva os dados dentro das arrays no diretório "database"
+function salvar_dados(){
+
+}
+
+main()

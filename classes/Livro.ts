@@ -13,7 +13,7 @@ export default class Livro {
         this._reservado = false
     }
 
-    reservar(){
+    public reservar(){
 
     }
 }
