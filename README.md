@@ -27,7 +27,7 @@ Nele um administrador pode *registrar um membro*, *registrar um livro* ou *reser
   - ISBN do livro (identifica qual livro foi reservado)
   - Matricula do membro (registrar qual membro reservou o livro)
 
-  *Reservar* também marca o livro reservado como *reservado*
+  *Reservar* também marca o livro reservado como *reservado*.
 
 - **Devolver** <br>
   Devolve o livro, registrando o dia que foi feita tal devolução.
@@ -37,3 +37,22 @@ Nele um administrador pode *registrar um membro*, *registrar um livro* ou *reser
 - **Renovar** <br>
   Renova um *Emprestimo*, adicionando +7 dias à data de expiração.
   
+## Especificação de classes
+Existem 4 classes: *Pessoa*, *Membro*, *Livro* e *Emprestimo*.
+
+### Pessoa
+Pessoa é uma classe abstrata (só pode ser extendida).
+
+#### Campos
+Existem 3 campos dentro de uma pessoa: _nome, _endereco e _telefone.
+
+ - ##### _nome: string
+   Campo protegido, indicando o nome da pessoa.
+ - ##### _endereco: string
+   Campo protegido, indicando o endereço da pessoa.
+ - ##### _telefone: string
+   Campo protegido, indicando o Telefone da pessoa.
+#### Métodos
+Essa classe não possuí métodos.
+
+
