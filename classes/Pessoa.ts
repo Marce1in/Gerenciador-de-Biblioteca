@@ -1,4 +1,4 @@
-export default class Pessoa{
+export default abstract class Pessoa{
     protected _nome: string
     protected _endereco: string
     protected _telefone: string
