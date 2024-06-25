@@ -166,7 +166,7 @@ Para criar um `Emprestimo` é preciso passar os determinados parâmetros:
         Nada.
 
 ## Interface do Sistema
-O sistema é gerenciado por uma interface puramente CLI
+O sistema é gerenciado por uma interface puramente CLI, todas as opções quando chegam ao seu fim levam o usuário de volta para a **Tela Principal**, com exceção da opção 8: **Sair**
 ### Tela Principal
 ```
 =========================
@@ -182,7 +182,7 @@ Gerenciador de biblioteca
 8. Sair
 =========================
 ```
-### 1. Livros
+### Input: 1. Livros
 Tela Inicial:
 ```
 =========================
@@ -192,7 +192,7 @@ Gerenciador de biblioteca
 2. Listar Livros
 =========================
 ```
-1. Adicionar Livro
+Input: 1. Adicionar Livro
 ```
 ================================
 Digite o Titulo: Dom casmurro
@@ -206,7 +206,7 @@ Digite o Ano de Publicação: 1899
 Livro criado com sucesso :)
 ===========================
 ```
-2. Listar Livros
+Input: 2. Listar Livros
 ```
 "{Reservado}! {ISBN} {Titulo}: {Autor}, {Ano de Publicação}"
 ====================================================================================
@@ -215,7 +215,7 @@ Livro criado com sucesso :)
 3. Reservado! 821-4-18-142459-0 O Alquimista: Paulo Coelho, 1988
 ====================================================================================
 ```
-### 2. Membros
+### Input: 2. Membros
 Tela Inicial:
 ```
 =========================
@@ -225,7 +225,7 @@ Gerenciador de biblioteca
 2. Listar Membros
 =========================
 ```
-1. Cadastrar Membro
+Input: 1. Cadastrar Membro
 ```
 ============================
 1. Nome: Yudi Tamashiro
@@ -233,7 +233,12 @@ Gerenciador de biblioteca
 3. Telefone: 4002-8922
 ============================
 ```
-2. Listar Membros
+```
+================================
+Membro cadastrado com sucesso :)
+================================
+```
+Input: 2. Listar Membros
 
 ```
 "{Matricula}: {Nome}, {Endereço}, {Número}"
@@ -242,7 +247,7 @@ Gerenciador de biblioteca
 =========================================================
 ```
 
-### 3. Listar Empréstimos
+### Input: 3. Listar Empréstimos
 ```
 "{status}! Feito em: {Data do Empréstimo}. {status} em: {Data da Devolução ou Data da Expiração}. Feito por: {Nome de quem reservou}. Livro {Nome do livro}"
 ============================================================================================================================================================
@@ -250,4 +255,71 @@ Gerenciador de biblioteca
 2. Atrasado! Feito em: 12/10/2024. Expirou em: 19/10/2024. Feito por: Yudi Tamashiro. Livro: O Alquimista.
 3. Fechado! Feito em: 10/09/2024. Devolvido em: 11/09/2024. Feito por: Yudi Tamashiro. Livro: Dom Casmurro
 ============================================================================================================================================================
+```
+### Input: 4. Reservar
+```
+"{Matricula}: {Nome}, {Endereço}, {Número}"
+=========================================================
+Selecione um Membro ou digite Q para cancelar
+---------------------------------------------
+1. 1420459697: Yudi Tamashiro, Alphaville 1410, 4002-8922
+=========================================================
+```
+Input: 1.
+```
+"{Reservado}! {ISBN} {Titulo}: {Autor}, {Ano de Publicação}"
+==========================================================================
+Selecione qual livro Yudi Tamashiro irá reservar ou digite Q para cancelar
+--------------------------------------------------------------------------
+1. Disponível! 978-3-16-148410-0 Dom casmurro: Machado de Assis, 1899
+==========================================================================
+```
+```
+==============================
+Livro reservado com sucesso :)
+==============================
+```
+### Input: 5. Devolver
+```
+"{status}! Feito em: {Data do Empréstimo}. {status} em: {Data da Devolução ou Data da Expiração}. Feito por: {Nome de quem reservou}. Livro {Nome do livro}"
+============================================================================================================================================================
+Selecione qual Empréstimo será devolvido ou digite Q para cancelar
+------------------------------------------------------------------
+1. Aberto! Feito em: 14/10/2024. Expira em: 21/10/2024. Feito por: Yudi Tamashiro. Livro: O Vendedor de Sonhos: O Chamado.
+2. Atrasado! Feito em: 12/10/2024. Expirou em: 19/10/2024. Feito por: Yudi Tamashiro. Livro: O Alquimista.
+============================================================================================================================================================
+```
+
+```
+==============================
+Livro devolvido com sucesso :)
+==============================
+```
+### Input: 6. Renovar
+```
+"{status}! Feito em: {Data do Empréstimo}. {status} em: {Data da Devolução ou Data da Expiração}. Feito por: {Nome de quem reservou}. Livro {Nome do livro}"
+============================================================================================================================================================
+Selecione qual Empréstimo será renovado ou digite Q para cancelar
+-----------------------------------------------------------------
+1. Aberto! Feito em: 14/10/2024. Expira em: 21/10/2024. Feito por: Yudi Tamashiro. Livro: O Vendedor de Sonhos: O Chamado.
+2. Atrasado! Feito em: 12/10/2024. Expirou em: 19/10/2024. Feito por: Yudi Tamashiro. Livro: O Alquimista.
+============================================================================================================================================================
+```
+
+```
+====================================
+Empréstimo Renovado para: 28/10/2024
+====================================
+```
+### Input: 7. Salvar
+```
+===========================
+Dados salvos com sucesso :)
+===========================
+```
+### Input: 8. Sair
+```
+=========
+Até mais!
+=========
 ```
