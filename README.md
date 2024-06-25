@@ -164,3 +164,90 @@ Para criar um `Emprestimo` é preciso passar os determinados parâmetros:
         Nenhum.
       - ###### Retorno
         Nada.
+
+## Interface do Sistema
+O sistema é gerenciado por uma interface puramente CLI
+### Tela Principal
+```
+=========================
+Gerenciador de biblioteca
+-------------------------
+1. Livros
+2. Membros
+3. Listar Empréstimos
+4. Reservar
+5. Devolver
+6. Renovar
+7. Salvar
+8. Sair
+=========================
+```
+### 1. Livros
+Tela Inicial:
+```
+=========================
+Gerenciador de biblioteca
+-------------------------
+1. Adicionar Livro
+2. Listar Livros
+=========================
+```
+1. Adicionar Livro
+```
+================================
+Digite o Titulo: Dom casmurro
+Digite o Autor: Machado de Assis
+Digite o Ano de Publicação: 1899
+================================
+```
+
+```
+===========================
+Livro criado com sucesso :)
+===========================
+```
+2. Listar Livros
+```
+"{Reservado}! {ISBN} {Titulo}: {Autor}, {Ano de Publicação}"
+====================================================================================
+1. Disponível! 978-3-16-148410-0 Dom casmurro: Machado de Assis, 1899
+2. Reservado! 756-7-61-988211-0 O Vendedor de Sonhos: O Chamado: Augusto Curry, 2008
+3. Reservado! 821-4-18-142459-0 O Alquimista: Paulo Coelho, 1988
+====================================================================================
+```
+### 2. Membros
+Tela Inicial:
+```
+=========================
+Gerenciador de biblioteca
+-------------------------
+1. Cadastrar Membro
+2. Listar Membros
+=========================
+```
+1. Cadastrar Membro
+```
+============================
+1. Nome: Yudi Tamashiro
+2. Endereço: Alphaville 1410
+3. Telefone: 4002-8922
+============================
+```
+2. Listar Membros
+
+```
+"{Matricula}: {Nome}, {Endereço}, {Número}"
+=========================================================
+1. 1420459697: Yudi Tamashiro, Alphaville 1410, 4002-8922
+=========================================================
+```
+
+### 3. Listar Empréstimos
+```
+"{status}! Feito em: {Data do Empréstimo}. {status} em: {Data da Devolução ou Data da Expiração}. Feito por: {Nome de quem reservou}. Livro {Nome do livro}"
+============================================================================================================================================================
+1. Aberto! Feito em: 14/10/2024. Expira em: 21/10/2024. Feito por: Yudi Tamashiro. Livro: O Vendedor de Sonhos: O Chamado.
+2. Atrasado! Feito em: 12/10/2024. Expirou em: 19/10/2024. Feito por: Yudi Tamashiro. Livro: O Alquimista.
+3. Fechado! Feito em: 10/09/2024. Devolvido em: 11/09/2024. Feito por: Yudi Tamashiro. Livro: Dom Casmurro
+============================================================================================================================================================
+```
