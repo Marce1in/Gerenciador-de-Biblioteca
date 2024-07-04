@@ -1,35 +1,33 @@
-import Livro from "./Livro"
+import { Livro } from "./Livro";
+import { Membro } from "./Membro";
 
-export default class Emprestimo {
-    private _dataEmprestimo: Date
-    private _dataExpiracao: Date
-    private _dataDevolucao: Date | null
+export class Emprestimo {
+  public membro: Membro;
+  public livro: Livro
+  public dataEmprestimo: Date;
+  public dataDevolucao?: Date;
+  public dataExpiracao: Date;
+  public encerrado: boolean;
+  public atrasado: boolean;
+  public ISBNLivro: string;
 
-    private _ISBNLivro: string
-    private _matriculaMembro: string
+  constructor(membro: Membro, livro: Livro, dataEmprestimo: Date, dataExpiracao: Date) {
+      this.membro = membro;
+      this.livro = livro;
+      this.dataEmprestimo = dataEmprestimo;
+      this.dataExpiracao = dataExpiracao;
+      this.encerrado = false;
+      this.atrasado = false;
+      this.ISBNLivro = livro.ISBN;
+  }
 
-    private _encerrado: boolean
+  devolver(): void {
+    this.dataDevolucao = new Date();
+    this.encerrado = true;
+    this.livro.devolver();
+}
 
-    constructor(ISBNLivro: string, matriculaMembro: string){
-        this._dataEmprestimo = new Date
-        this._dataExpiracao = this.atrasarData(this._dataEmprestimo, 7)
-        this._dataDevolucao = null
-
-        this._ISBNLivro = ISBNLivro
-        this._matriculaMembro = matriculaMembro
-
-        this._encerrado = false
-    }
-
-    public devolver(livro: Livro){
-
-    }
-    public renovar(){
-
-    }
-
-    private atrasarData(data: Date, dias: number): Date{
-
-        return new Date
-    }
+renovar(): void {
+    this.dataExpiracao.setMonth(this.dataExpiracao.getMonth() + 1);
+}
 }

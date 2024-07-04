@@ -1,27 +1,32 @@
-import Emprestimo from './Emprestimo'
+import { Emprestimo } from "./Emprestimo";
+import { Membro } from "./Membro";
+export class Livro {
+    public titulo: string;
+    public autor: string;
+    public ISBN: string;
+    public anoPublicacao: number;
+    public reservado: boolean;
 
-export default class Livro {
-    private _titulo: string
-    private _autor: string
-    private _ISBN: string
-    private _anoPublicacao: string
-
-    private _reservado: boolean
-
-    constructor(titulo: string, autor: string, ISBN: string, anoPublicacao: string) {
-        this._titulo = titulo
-        this._autor = autor
-        this._ISBN = ISBN
-        this._anoPublicacao = anoPublicacao
-
-        this._reservado = false
+    constructor(titulo: string, autor: string, ISBN: string, anoPublicacao: number) {
+        this.ISBN = ISBN;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoPublicacao = anoPublicacao;
+        this.reservado = false;
     }
 
-    public reservar(matriculaMembro: string): Emprestimo{
-        const emprestimo = new Emprestimo ("", "")
+    reservar(membro: Membro): Emprestimo {
+        if (this.reservado) {
+            throw new Error('Livro já está reservado');
+        }
+        this.reservado = true;
+        const dataEmprestimo = new Date();
+        const dataExpiracao = new Date();
+        dataExpiracao.setMonth(dataExpiracao.getMonth() + 1);
+        return new Emprestimo(membro, this, dataEmprestimo, dataExpiracao);
+    }
 
-        return emprestimo
+    devolver(): void {
+        this.reservado = false;
     }
 }
-
-
