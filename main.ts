@@ -40,15 +40,6 @@ function exibirSubMenuMembros(): void {
     `);
 }
 
-function exibirSubMenuReservar(): void {
-    console.log(`
-=========================
-Selecione um Membro ou digite Q para cancelar
--------------------------
-`);
-    listarMembros();
-}
-
 function listarMembros(): void {
     console.log('==============================');
     console.log('Listar Membros');
@@ -58,7 +49,7 @@ function listarMembros(): void {
         console.log('Nenhum membro cadastrado.');
     } else {
         membros.forEach((membro) => {
-            console.log(`Matricula:${membro.matricula}:`);
+            console.log(`Matricula:${membro.matricula}`);
             console.log(`Nome: ${membro.nome}`);
             console.log(`Endereço: ${membro.endereco}`);
             console.log(`Telefone: ${membro.telefone}`);
@@ -107,7 +98,7 @@ function cadastrarMembro(): void {
     console.log('==============================');
     const nome = prompt('Nome: ');
     const endereco = prompt('Endereço: ');
-    const telefone = parseInt('Telefone: ');
+    const telefone = prompt('Telefone: ');
 
     biblioteca.adicionarMembro(nome, endereco, telefone);
     console.log('Membro cadastrado com sucesso');

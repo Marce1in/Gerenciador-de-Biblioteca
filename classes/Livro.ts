@@ -1,25 +1,25 @@
 import { Emprestimo } from "./Emprestimo";
 import { Membro } from "./Membro";
 export class Livro {
-    public titulo: string;
-    public autor: string;
-    public ISBN: string;
-    public anoPublicacao: number;
-    public reservado: boolean;
+    private _titulo: string;
+    private _autor: string;
+    private _ISBN: string;
+    private _anoPublicacao: number;
+    private _reservado: boolean;
 
     constructor(titulo: string, autor: string, ISBN: string, anoPublicacao: number) {
-        this.ISBN = ISBN;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.anoPublicacao = anoPublicacao;
-        this.reservado = false;
+        this._ISBN = ISBN;
+        this._titulo = titulo;
+        this._autor = autor;
+        this._anoPublicacao = anoPublicacao;
+        this._reservado = false;
     }
 
     reservar(membro: Membro): Emprestimo {
-        if (this.reservado) {
+        if (this._reservado) {
             throw new Error('Livro já está reservado');
         }
-        this.reservado = true;
+        this._reservado = true;
         const dataEmprestimo = new Date();
         const dataExpiracao = new Date();
         dataExpiracao.setMonth(dataExpiracao.getMonth() + 1);
@@ -27,6 +27,22 @@ export class Livro {
     }
 
     devolver(): void {
-        this.reservado = false;
+        this._reservado = false;
+    }
+
+    get titulo(){
+        return this._titulo
+    }
+    get autor(){
+        return this._autor
+    }
+    get ISBN(){
+        return this._ISBN
+    }
+    get anoPublicacao(){
+        return this._anoPublicacao
+    }
+    get reservado(){
+        return this._reservado
     }
 }
