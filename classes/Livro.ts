@@ -15,7 +15,7 @@ export class Livro {
         this._reservado = false;
     }
 
-    reservar(membro: Membro): Emprestimo {
+    reservar(matriculaMembro: string): Emprestimo {
         if (this._reservado) {
             throw new Error('Livro já está reservado');
         }
@@ -23,7 +23,7 @@ export class Livro {
         const dataEmprestimo = new Date();
         const dataExpiracao = new Date();
         dataExpiracao.setMonth(dataExpiracao.getMonth() + 1);
-        return new Emprestimo(membro, this, dataEmprestimo, dataExpiracao);
+        return new Emprestimo(matriculaMembro, this._ISBN, dataEmprestimo, dataExpiracao);
     }
 
     devolver(): void {

@@ -2,41 +2,33 @@ import { Livro } from "./Livro";
 import { Membro } from "./Membro";
 
 export class Emprestimo {
-    private _membro: Membro;
-    private _livro: Livro
     private _dataEmprestimo: Date;
     private _dataDevolucao?: Date;
     private _dataExpiracao: Date;
     private _encerrado: boolean;
     private _atrasado: boolean;
     private _ISBNLivro: string;
+    private _matriculaMembro: string;
 
-    constructor(membro: Membro, livro: Livro, dataEmprestimo: Date, dataExpiracao: Date) {
-        this._membro = membro;
-        this._livro = livro;
+    constructor(matriculaMembro: string, ISBNLivro: string, dataEmprestimo: Date, dataExpiracao: Date) {
         this._dataEmprestimo = dataEmprestimo;
         this._dataExpiracao = dataExpiracao;
         this._encerrado = false;
         this._atrasado = false;
-        this._ISBNLivro = livro.ISBN;
+        this._ISBNLivro = ISBNLivro
+        this._matriculaMembro = matriculaMembro
     }
 
-    devolver(): void {
+    devolver(livro: Livro): void {
         this._dataDevolucao = new Date();
         this._encerrado = true;
-        this._livro.devolver();
+        livro.devolver();
     }
 
     renovar(): void {
         this._dataExpiracao.setMonth(this._dataExpiracao.getMonth() + 1);
     }
 
-    get membro(){
-        return this._membro
-    }
-    get livro(){
-        return this._livro
-    }
     get dataEmprestimo(){
         return this._dataEmprestimo
     }
@@ -54,5 +46,8 @@ export class Emprestimo {
     }
     get ISBNLivro(){
         return this._ISBNLivro
+    }
+    get matriculaMembro(){
+        return this._matriculaMembro
     }
 }

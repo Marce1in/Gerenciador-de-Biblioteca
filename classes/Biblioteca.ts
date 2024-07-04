@@ -9,12 +9,12 @@ export class Biblioteca {
     private _emprestimos: Emprestimo[]
 
     constructor(){
-        this._membros = this._carregar(Membro, "Membros.csv")
-        this._livros = this._carregar(Livro, "Livros.csv")
-        this._emprestimos = this._carregar(Emprestimo, "Emprestimos.csv")
+        this._membros = this._carregar(new Membro("", "", "", ""), "Membros.csv")
+        this._livros = this._carregar(new Livro("", "", "", 0), "Livros.csv")
+        // this._emprestimos = this._carregar, "Emprestimos.csv")
     }
-    private _carregar(classe: any, nomeDatabase: string): [] {
-        console.log(classe)
+    private _carregar(classe: {}, nomeDatabase: string): [] {
+        console.log()
         return []
     }
 
@@ -49,19 +49,21 @@ export class Biblioteca {
         if (!livro || !membro) {
             throw new Error('Livro ou Membro não encontrado');
         }
-        const emprestimo = livro.reservar(membro);
+        const emprestimo = livro.reservar(membro.matricula);
         this._emprestimos.push(emprestimo);
         return emprestimo;
     }
    
-
-
     devolverLivro(ISBN: string): void {
         const emprestimo = this._emprestimos.find(e => e.ISBNLivro === ISBN && !e.encerrado);
         if (!emprestimo) {
             throw new Error('Empréstimo não encontrado');
         }
-        emprestimo.devolver();
+        const livro = this._livros.find(e => e.ISBN === ISBN)
+        if (!livro) {
+            throw new Error('Livro não encontrado');
+        }
+        emprestimo.devolver(livro);
     }
 
     renovarEmprestimo(ISBN: string): void {

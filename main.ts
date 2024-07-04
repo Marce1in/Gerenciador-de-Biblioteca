@@ -117,7 +117,14 @@ function listarEmprestimos(): void {
             const dataEmprestimo = emprestimo.dataEmprestimo.toLocaleDateString();
             const dataDevolucao = emprestimo.encerrado ? emprestimo.dataDevolucao?.toLocaleDateString() : 'N/A';
             const dataExpiracao = emprestimo.dataExpiracao.toLocaleDateString();
-            console.log(`${index + 1}. ${status}! Feito em: ${dataEmprestimo}. Devolvido em: ${dataDevolucao}. Data de Expiração: ${dataExpiracao}. Membro: ${emprestimo.membro.nome}. Livro: ${emprestimo.livro.titulo}`);
+            console.log(
+                `${index + 1}. 
+                ${status}! 
+                Feito em: ${dataEmprestimo}. 
+                Devolvido em: ${dataDevolucao}. 
+                Data de Expiração: ${dataExpiracao}. 
+                Membro: ${emprestimo.membro.nome}. 
+                Livro: ${emprestimo.livro.titulo}`);
         });
     }
 }
