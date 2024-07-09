@@ -9,12 +9,17 @@ export class Biblioteca {
     private _emprestimos: Emprestimo[]
 
     constructor(){
-        this._membros = this._carregar(new Membro("", "", "", ""), "Membros.csv")
-        this._livros = this._carregar(new Livro("", "", "", 0), "Livros.csv")
-        // this._emprestimos = this._carregar, "Emprestimos.csv")
+        this._membros = this._carregar(Membro, "Membros.csv")
+        this._livros = []
+        this._emprestimos = []
     }
-    private _carregar(classe: {}, nomeDatabase: string): [] {
-        console.log()
+    private _carregar(classe: any, nomeDatabase: string): [] {
+        const databaseFD = fs.openSync(`../database/${nomeDatabase}`, "r")
+
+        const buffer= new Buffer("")
+        fs.readSync(databaseFD, buffer)
+        console.log(buffer)
+
         return []
     }
 
@@ -27,6 +32,19 @@ export class Biblioteca {
 
     listarMembros(): Membro[] {
         return this._membros;
+    }
+
+    encontrarMembro(matriculaMembro: string): Membro | undefined{
+        return this._membros.find(
+            membro => membro.matricula == matriculaMembro)
+    }
+    encontrarLivro(ISBNLivro: string): Livro | undefined{
+        return this._livros.find(
+            livro => livro.ISBN == ISBNLivro)
+    }
+    encontrarEmprestimo(ISBNLivro: string): Emprestimo | undefined{
+        return this._emprestimos.find(
+            emprestimo => emprestimo.ISBNLivro == ISBNLivro)
     }
 
     adicionarLivro(titulo: string, autor: string, ISBN: string, anoPublicacao: number): Livro {
@@ -44,8 +62,8 @@ export class Biblioteca {
     }
 
     reservarLivro(ISBN: string, matriculaMembro: string): Emprestimo {
-        const livro = this._livros.find(l => l.ISBN === ISBN);
-        const membro = this._membros.find(m => m.matricula === matriculaMembro);
+        const livro = this.encontrarLivro(ISBN)
+        const membro = this.encontrarMembro(matriculaMembro)
         if (!livro || !membro) {
             throw new Error('Livro ou Membro não encontrado');
         }
@@ -53,13 +71,13 @@ export class Biblioteca {
         this._emprestimos.push(emprestimo);
         return emprestimo;
     }
-   
+
     devolverLivro(ISBN: string): void {
-        const emprestimo = this._emprestimos.find(e => e.ISBNLivro === ISBN && !e.encerrado);
+        const emprestimo = this.encontrarEmprestimo(ISBN)
         if (!emprestimo) {
             throw new Error('Empréstimo não encontrado');
         }
-        const livro = this._livros.find(e => e.ISBN === ISBN)
+        const livro = this.encontrarLivro(ISBN)
         if (!livro) {
             throw new Error('Livro não encontrado');
         }
@@ -67,7 +85,8 @@ export class Biblioteca {
     }
 
     renovarEmprestimo(ISBN: string): void {
-        const emprestimo = this._emprestimos.find(e => e.ISBNLivro === ISBN && !e.encerrado);
+        const emprestimo = this.encontrarEmprestimo(ISBN)
+
         if (!emprestimo) {
             throw new Error('Empréstimo não encontrado');
         }
@@ -75,12 +94,11 @@ export class Biblioteca {
     }
 
     salvar(): void {
-        
+
     }
-        
+
 
     sair(): void {
         console.log('Até mais!');
-        
     }
 }
