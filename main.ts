@@ -1,11 +1,11 @@
-import { Biblioteca } from './classes/Biblioteca';
+import Biblioteca from './classes/Biblioteca';
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
-const biblioteca = new Biblioteca();
-
+let biblioteca = new Biblioteca(false);
 
 function exibirMenuPrincipal(): void {
+    console.clear()
     console.log(`
 =========================
 Gerenciador de biblioteca
@@ -23,6 +23,7 @@ Gerenciador de biblioteca
 }
 
 function exibirSubMenuLivros(): void {
+    console.clear()
     console.log(`
 =========================
 1. Adicionar Livro
@@ -32,6 +33,7 @@ function exibirSubMenuLivros(): void {
 }
 
 function exibirSubMenuMembros(): void {
+    console.clear()
     console.log(`
 =========================
 1. Cadastrar Membro
@@ -41,6 +43,7 @@ function exibirSubMenuMembros(): void {
 }
 
 function listarMembros(): void {
+    console.clear()
     console.log('==============================');
     console.log('Listar Membros');
     console.log('==============================');
@@ -56,12 +59,11 @@ function listarMembros(): void {
             console.log('==============================');
         });
     }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
-        
-    
-
 
 function adicionarLivro(): void {
+    console.clear()
     console.log('==============================');
     console.log('Adicionar Livro');
     console.log('==============================');
@@ -72,9 +74,11 @@ function adicionarLivro(): void {
 
     biblioteca.adicionarLivro(titulo, autor, ISBN, anoPublicacao);
     console.log('Livro adicionado com sucesso');
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function listarLivros(): void {
+    console.clear()
     console.log('==============================');
     console.log('Listar Livros');
     console.log('==============================');
@@ -89,10 +93,12 @@ function listarLivros(): void {
             console.log(`Ano de Publicação: ${livro.anoPublicacao}`);
             console.log('==============================');
         });
-}
+    }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function cadastrarMembro(): void {
+    console.clear()
     console.log('==============================');
     console.log('Cadastrar Membro');
     console.log('==============================');
@@ -102,9 +108,11 @@ function cadastrarMembro(): void {
 
     biblioteca.adicionarMembro(nome, endereco, telefone);
     console.log('Membro cadastrado com sucesso');
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function listarEmprestimos(): void {
+    console.clear()
     console.log('==============================');
     console.log('Listar Empréstimos');
     console.log('==============================');
@@ -117,11 +125,14 @@ function listarEmprestimos(): void {
             const dataEmprestimo = emprestimo.dataEmprestimo.toLocaleDateString();
             const dataDevolucao = emprestimo.encerrado ? emprestimo.dataDevolucao?.toLocaleDateString() : 'N/A';
             const dataExpiracao = emprestimo.dataExpiracao.toLocaleDateString();
+
             const livro = biblioteca.encontrarLivro(emprestimo.ISBNLivro)
             const membro = biblioteca.encontrarMembro(emprestimo.matriculaMembro)
+
             if(!livro || !membro){
                 throw Error("O impossível aconteceu")
             }
+
             console.log(
                 `${index + 1}.
                 ${status}!
@@ -132,33 +143,41 @@ function listarEmprestimos(): void {
                 Livro: ${livro.titulo}`);
         });
     }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 
 function reservarLivro(): void {
+    console.clear()
     console.log('==============================');
     console.log('Reservar Livro');
     console.log('==============================');
     console.log('Selecione um Membro:');
+
     listarMembros();
+
     const opcao = prompt('Escolha uma opção ou digite Q para cancelar: ');
     if (opcao.toUpperCase() === 'Q') return;
 
     const indexMembro = parseInt(opcao, 10) - 1;
     if (isNaN(indexMembro) || indexMembro < 0 || indexMembro >= biblioteca.listarMembros().length) {
         console.log('Opção inválida.');
+        prompt("\n-- Pressione Enter para Continuar --\n")
         return;
     }
 
     const matriculaMembro = biblioteca.listarMembros()[indexMembro].matricula;
+
     console.log('Selecione qual livro será reservado:');
     listarLivros();
+
     const opcaoLivro = prompt('Escolha uma opção ou digite Q para cancelar: ');
     if (opcaoLivro.toUpperCase() === 'Q') return;
 
     const indexLivro = parseInt(opcaoLivro, 10) - 1;
     if (isNaN(indexLivro) || indexLivro < 0 || indexLivro >= biblioteca.listarLivros().length) {
         console.log('Opção inválida.');
+        prompt("\n-- Pressione Enter para Continuar --\n")
         return;
     }
 
@@ -169,9 +188,11 @@ function reservarLivro(): void {
     } catch (error) {
         console.error(error);
     }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function devolverLivro(): void {
+    console.clear()
     console.log('==============================');
     console.log('Devolver Livro');
     console.log('==============================');
@@ -183,6 +204,7 @@ function devolverLivro(): void {
     const indexEmprestimo = parseInt(opcao, 10) - 1;
     if (isNaN(indexEmprestimo) || indexEmprestimo < 0 || indexEmprestimo >= biblioteca.listarEmprestimos().length) {
         console.log('Opção inválida.');
+        prompt("\n-- Pressione Enter para Continuar --\n")
         return;
     }
 
@@ -193,9 +215,11 @@ function devolverLivro(): void {
     } catch (error) {
         console.error(error);
     }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function renovarEmprestimo(): void {
+    console.clear()
     console.log('==============================');
     console.log('Renovar Empréstimo');
     console.log('==============================');
@@ -207,6 +231,7 @@ function renovarEmprestimo(): void {
     const indexEmprestimo = parseInt(opcao, 10) - 1;
     if (isNaN(indexEmprestimo) || indexEmprestimo < 0 || indexEmprestimo >= biblioteca.listarEmprestimos().length) {
         console.log('Opção inválida.');
+        prompt("\n-- Pressione Enter para Continuar --\n")
         return;
     }
 
@@ -217,21 +242,24 @@ function renovarEmprestimo(): void {
     } catch (error) {
         console.error(error);
     }
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function salvarDados(): void {
+    console.clear()
     console.log('==============================');
     console.log('Salvar Dados');
     console.log('==============================');
     biblioteca.salvar();
     console.log('Dados salvos com sucesso');
+    prompt("\n-- Pressione Enter para Continuar --\n")
 }
 
 function sair(): void {
+    console.clear()
     console.log('==============================');
     console.log('Saindo do sistema...');
     console.log('==============================');
-    biblioteca.sair();
 }
 
 
@@ -251,6 +279,7 @@ function iniciarSistema(): void {
                     listarLivros();
                 } else {
                     console.log('Opção inválida.');
+                    prompt("\n-- Pressione Enter para Continuar --\n")
                 }
                 break;
             case '2':
@@ -262,6 +291,7 @@ function iniciarSistema(): void {
                     listarMembros();
                 } else {
                     console.log('Opção inválida.');
+                    prompt("\n-- Pressione Enter para Continuar --\n")
                 }
                 break;
             case '3':
@@ -285,9 +315,10 @@ function iniciarSistema(): void {
                 break;
             default:
                 console.log('Opção inválida.');
+                prompt("\n-- Pressione Enter para Continuar --\n")
         }
     }
 }
 
-// Iniciar o sistema
+// Inicia o sistema
 iniciarSistema();

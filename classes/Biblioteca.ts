@@ -1,67 +1,72 @@
-import { Membro } from './Membro';
-import { Livro } from './Livro';
-import { Emprestimo } from './Emprestimo';
-import fs from "fs"
+import Membro from './Membro';
+import Livro from './Livro';
+import Emprestimo from './Emprestimo';
+import ObjetoCsv from './ObjetoCsv';
 
-export class Biblioteca {
+export default class Biblioteca {
     private _membros: Membro[]
     private _livros: Livro[]
     private _emprestimos: Emprestimo[]
 
-    constructor(){
-        this._membros = this._carregar(Membro, "Membros.csv")
-        this._livros = []
-        this._emprestimos = []
-    }
-    private _carregar(classe: any, nomeDatabase: string): [] {
-        const databaseFD = fs.openSync(`../database/${nomeDatabase}`, "r")
+    constructor(carregarDados = true){
+        this._membros = carregarDados ?
+            ObjetoCsv.csvParaObjetos<Membro>(Membro, "../database", "Membro.csv") : []
 
-        const buffer= new Buffer("")
-        fs.readSync(databaseFD, buffer)
-        console.log(buffer)
+        this._livros = carregarDados ?
+            ObjetoCsv.csvParaObjetos<Livro>(Livro, "../database", "Livro.csv") : []
 
-        return []
+        this._emprestimos = carregarDados ?
+            ObjetoCsv.csvParaObjetos<Emprestimo>( Emprestimo, "../database", "Emprestimo.csv") : []
     }
 
-    adicionarMembro(nome: string, endereco: string, telefone: string): Membro {
+    public salvar(): void {
+        ObjetoCsv.objetosParaCsv(this._livros, "../database", "Livro.csv")
+        ObjetoCsv.objetosParaCsv(this._membros, "../database", "Membro.csv")
+        ObjetoCsv.objetosParaCsv(this._emprestimos, "../database", "Emprestimo.csv")
+    }
+
+
+    public encontrarMembro(matriculaMembro: string): Membro | undefined{
+        return this._membros.find(
+            membro => membro.matricula == matriculaMembro)
+    }
+    public encontrarLivro(ISBNLivro: string): Livro | undefined{
+        return this._livros.find(
+            livro => livro.ISBN == ISBNLivro)
+    }
+    public encontrarEmprestimo(ISBNLivro: string): Emprestimo | undefined{
+        return this._emprestimos.find(
+            emprestimo => emprestimo.ISBNLivro == ISBNLivro)
+    }
+
+
+    public listarMembros(): Membro[] {
+        return this._membros;
+    }
+
+    public listarLivros(): Livro[] {
+        return this._livros;
+    }
+
+    public listarEmprestimos(): Emprestimo[] {
+        return this._emprestimos;
+    }
+
+
+    public adicionarMembro(nome: string, endereco: string, telefone: string): Membro {
         const matricula = `${this._membros.length + 1}`;
         const membro = new Membro(matricula, nome, endereco, telefone);
         this._membros.push(membro);
         return membro;
     }
 
-    listarMembros(): Membro[] {
-        return this._membros;
-    }
-
-    encontrarMembro(matriculaMembro: string): Membro | undefined{
-        return this._membros.find(
-            membro => membro.matricula == matriculaMembro)
-    }
-    encontrarLivro(ISBNLivro: string): Livro | undefined{
-        return this._livros.find(
-            livro => livro.ISBN == ISBNLivro)
-    }
-    encontrarEmprestimo(ISBNLivro: string): Emprestimo | undefined{
-        return this._emprestimos.find(
-            emprestimo => emprestimo.ISBNLivro == ISBNLivro)
-    }
-
-    adicionarLivro(titulo: string, autor: string, ISBN: string, anoPublicacao: number): Livro {
+    public adicionarLivro(titulo: string, autor: string, ISBN: string, anoPublicacao: number): Livro {
         const livro = new Livro(titulo, autor, ISBN, anoPublicacao);
         this._livros.push(livro);
         return livro;
     }
 
-    listarLivros(): Livro[] {
-        return this._livros;
-    }
-
-    listarEmprestimos(): Emprestimo[] {
-        return this._emprestimos;
-    }
-
-    reservarLivro(ISBN: string, matriculaMembro: string): Emprestimo {
+    public reservarLivro(ISBN: string, matriculaMembro: string): Emprestimo {
         const livro = this.encontrarLivro(ISBN)
         const membro = this.encontrarMembro(matriculaMembro)
         if (!livro || !membro) {
@@ -72,7 +77,7 @@ export class Biblioteca {
         return emprestimo;
     }
 
-    devolverLivro(ISBN: string): void {
+    public devolverLivro(ISBN: string): void {
         const emprestimo = this.encontrarEmprestimo(ISBN)
         if (!emprestimo) {
             throw new Error('Empréstimo não encontrado');
@@ -84,7 +89,7 @@ export class Biblioteca {
         emprestimo.devolver(livro);
     }
 
-    renovarEmprestimo(ISBN: string): void {
+    public renovarEmprestimo(ISBN: string): void {
         const emprestimo = this.encontrarEmprestimo(ISBN)
 
         if (!emprestimo) {
@@ -93,12 +98,7 @@ export class Biblioteca {
         emprestimo.renovar();
     }
 
-    salvar(): void {
-
-    }
-
-
-    sair(): void {
+    public sair(): void {
         console.log('Até mais!');
     }
 }

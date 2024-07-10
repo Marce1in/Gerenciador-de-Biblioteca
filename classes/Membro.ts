@@ -1,8 +1,7 @@
-import { Pessoa } from "./Pessoa";
-import { randomUUID } from "crypto";
+import Pessoa from "./Pessoa";
 
-export class Membro extends Pessoa {
-    private _matricula: string;
+export default class Membro extends Pessoa {
+    private readonly _matricula: string;
 
     constructor(matricula: string, nome: string, endereco: string, telefone: string) {
         super(nome, endereco, telefone)

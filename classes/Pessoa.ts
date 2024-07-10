@@ -1,7 +1,7 @@
-export class Pessoa {
-    private _nome: string;
-    private _endereco: string;
-    private _telefone: string;
+export default class Pessoa {
+    protected readonly _nome: string;
+    protected readonly _endereco: string;
+    protected readonly _telefone: string;
 
     constructor (nome: string, endereco: string, telefone: string){
         this._nome = nome;
@@ -12,23 +12,11 @@ export class Pessoa {
         return this._nome;
     }
 
-    set nome(nome: string) {
-        this._nome = nome;
-    }
-
     get endereco(): string {
         return this._endereco;
     }
 
-    set endereco(endereco: string) {
-        this._endereco = endereco;
-    }
-
     get telefone(): string {
         return this._telefone;
-    }
-
-    set telefone(telefone: string) {
-        this._telefone = telefone;
     }
 }

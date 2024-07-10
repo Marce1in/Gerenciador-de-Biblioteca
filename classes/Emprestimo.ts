@@ -1,14 +1,13 @@
-import { Livro } from "./Livro";
-import { Membro } from "./Membro";
+import Livro from "./Livro";
 
-export class Emprestimo {
-    private _dataEmprestimo: Date;
+export default class Emprestimo {
+    private readonly _dataEmprestimo: Date;
     private _dataDevolucao?: Date;
     private _dataExpiracao: Date;
     private _encerrado: boolean;
     private _atrasado: boolean;
-    private _ISBNLivro: string;
-    private _matriculaMembro: string;
+    private readonly _ISBNLivro: string;
+    private readonly _matriculaMembro: string;
 
     constructor(matriculaMembro: string, ISBNLivro: string, dataEmprestimo: Date, dataExpiracao: Date) {
         this._dataEmprestimo = dataEmprestimo;
