@@ -76,23 +76,10 @@ export default class ObjetoCsv {
 
         const headerCsv: string[] = Object.keys(objetos[0])
 
-        let csv: string
-
-        try {
-            csv = this._obterCsv(CaminhoDiretorio, nomeArquivo)
-        }
-        catch (erro){
-            try {
-                this._criarCsv(headerCsv, CaminhoDiretorio, nomeArquivo)
-                csv = this._obterCsv(CaminhoDiretorio, nomeArquivo)
-            }
-            catch (erro){
-                console.error(`Algo de muito errado aconteceu durante a obtenção de ${nomeArquivo} em ${path.resolve(__dirname, CaminhoDiretorio)}`)
-                throw erro
-            }
-        }
-
+        let csv: string = headerCsv.join(",") + "\n"
         csv += objetos.map(obj => Object.values(obj).join(",")).join("\n") + "\n";
+
+        console.log(csv)
 
         fs.writeFileSync(
             path.resolve(
@@ -101,6 +88,14 @@ export default class ObjetoCsv {
             ),
             csv
         )
+    }
+
+    //Verifica se o nome do arquivo tem .csv no final
+    private static _validarNome(nomeArquivo: string): boolean{
+        if (nomeArquivo.endsWith(".csv"))
+            return true
+        else
+            return false
     }
 
     private static _obterCsv(caminhoDiretorio: string, nomeArquivo: string): string{
@@ -119,24 +114,6 @@ export default class ObjetoCsv {
         }
 
         return dadosSalvos
-    }
-
-    private static _criarCsv(headerCsv: string[], caminhoDiretorio: string, nomeArquivo: string){
-        fs.writeFileSync(
-            path.resolve(
-                __dirname,
-                path.join(caminhoDiretorio, nomeArquivo)
-            ),
-            headerCsv.join(",") + "\n"
-        )
-    }
-
-    //Verifica se o nome do arquivo tem .csv no final
-    private static _validarNome(nomeArquivo: string): boolean{
-        if (nomeArquivo.endsWith(".csv"))
-            return true
-        else
-            return false
     }
 
     private static _obterCamposConstrutor(construtor: Construtor): string[]{

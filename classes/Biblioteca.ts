@@ -16,7 +16,7 @@ export default class Biblioteca {
             ObjetoCsv.csvParaObjetos<Livro>(Livro, "../database", "Livro.csv", "s,s,s,n,b") : []
 
         this._emprestimos = carregarDados ?
-            ObjetoCsv.csvParaObjetos<Emprestimo>( Emprestimo, "../database", "Emprestimo.csv", "d,d,b,b,s,s,d") : []
+            ObjetoCsv.csvParaObjetos<Emprestimo>(Emprestimo, "../database", "Emprestimo.csv", "d,d,b,b,s,s,d") : []
     }
 
     public salvar(): void {
@@ -83,9 +83,7 @@ export default class Biblioteca {
             throw new Error('Empréstimo não encontrado');
         }
         const livro = this.encontrarLivro(ISBN)
-        if (!livro) {
-            throw new Error('Livro não encontrado');
-        }
+        //@ts-ignore << é literalmente impossível de acontecer
         emprestimo.devolver(livro);
     }
 

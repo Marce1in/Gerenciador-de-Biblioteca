@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "main": "ts-node $INIT_CWD/main.ts"
+        "main": "ts-node $INIT_CWD/main.ts",
+        "test": "jest"
     },
     "dependencies": {
         "@types/jest": "^29.5.12",

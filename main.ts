@@ -5,6 +5,7 @@ const prompt = promptSync();
 let biblioteca = new Biblioteca();
 
 function exibirMenuPrincipal(): void {
+    console.clear()
     console.log(`
 =========================
 Gerenciador de biblioteca
