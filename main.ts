@@ -2,10 +2,9 @@ import Biblioteca from './classes/Biblioteca';
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
-let biblioteca = new Biblioteca(false);
+let biblioteca = new Biblioteca();
 
 function exibirMenuPrincipal(): void {
-    console.clear()
     console.log(`
 =========================
 Gerenciador de biblioteca
@@ -96,7 +95,6 @@ function listarLivros(): void {
     }
     prompt("\n-- Pressione Enter para Continuar --\n")
 }
-
 function cadastrarMembro(): void {
     console.clear()
     console.log('==============================');

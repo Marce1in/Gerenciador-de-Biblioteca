@@ -10,13 +10,13 @@ export default class Biblioteca {
 
     constructor(carregarDados = true){
         this._membros = carregarDados ?
-            ObjetoCsv.csvParaObjetos<Membro>(Membro, "../database", "Membro.csv") : []
+            ObjetoCsv.csvParaObjetos<Membro>(Membro, "../database", "Membro.csv", "s,s,s,s") : []
 
         this._livros = carregarDados ?
-            ObjetoCsv.csvParaObjetos<Livro>(Livro, "../database", "Livro.csv") : []
+            ObjetoCsv.csvParaObjetos<Livro>(Livro, "../database", "Livro.csv", "s,s,s,n,b") : []
 
         this._emprestimos = carregarDados ?
-            ObjetoCsv.csvParaObjetos<Emprestimo>( Emprestimo, "../database", "Emprestimo.csv") : []
+            ObjetoCsv.csvParaObjetos<Emprestimo>( Emprestimo, "../database", "Emprestimo.csv", "d,d,b,b,s,s,d") : []
     }
 
     public salvar(): void {
@@ -96,9 +96,5 @@ export default class Biblioteca {
             throw new Error('Empréstimo não encontrado');
         }
         emprestimo.renovar();
-    }
-
-    public sair(): void {
-        console.log('Até mais!');
     }
 }

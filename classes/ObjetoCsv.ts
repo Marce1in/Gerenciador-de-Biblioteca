@@ -4,16 +4,20 @@ import path from 'node:path';
 //Eu demorei HORAS, para descobrir como declarar um tipo desses.
 //Isso é o tipo genérico de um construtor de uma classe
 type Construtor<T extends {} = {}> = new (...args: any[]) => T
-//Providễnciado por esse lindo arigo:
+//Providễnciado por esse lindo artigo:
 // https://www.simonholywell.com/post/typescript-constructor-type/
 
 
-//Essa classe tem como objetivo transformar os campos de uma array
-//de objetos em um arquivo csv e vise-versa
+/*
+Essa classe tem como objetivo transformar os campos de uma array
+de objetos em um arquivo csv e vise-versa
+*/
 export default class ObjetoCsv {
 
-    static csvParaObjetos<T>(construtor: Construtor, caminhoDiretorio: string, nomeArquivo: string): T[]{
+    //Esse é o código mais nojento da minha vida. Mas funciona... de algum jeito.
+    static csvParaObjetos<T>(construtor: Construtor, caminhoDiretorio: string, nomeArquivo: string, tipoHeader: string): T[]{
         const campos: string[] = this._obterCamposConstrutor(construtor)
+        const tipos: string[] = tipoHeader.split(",")
 
         let csv: string;
         try {
@@ -24,9 +28,41 @@ export default class ObjetoCsv {
             return []
         }
 
+        const objetos: object[] = []
+        const csvSplit: string[] = csv.split("\n")
+
+        csvSplit.forEach((obj, i) => {
+            if (i == 0){
+                return
+            }
+
+            const objeto: object = new construtor
+
+            const valores = obj.split(",")
+
+            for (let i = 0; i < campos.length; i++) {
+                const campo = campos[i];
+                const valor = valores[i];
+                const tipo = tipos[i];
+
+                if (tipo === "s") {
+                    (objeto as any)[campo] = valor;
+                } else if (tipo === "n") {
+                    (objeto as any)[campo] = Number(valor);
+                } else if (tipo === "b") {
+                    (objeto as any)[campo] = valor === "true";
+                } else if (tipo === "d") {
+                    (objeto as any)[campo] = valor ? new Date(valor) : undefined;
+                }
+            }
 
 
-        return []
+            objetos.push(objeto)
+        })
+
+        objetos.pop()
+
+        return objetos as T[]
     }
 
     static objetosParaCsv(objetos: object[], CaminhoDiretorio: string, nomeArquivo: string){
@@ -56,7 +92,7 @@ export default class ObjetoCsv {
             }
         }
 
-        csv += objetos.map(obj => Object.values(obj).join(",")).join("\n");
+        csv += objetos.map(obj => Object.values(obj).join(",")).join("\n") + "\n";
 
         fs.writeFileSync(
             path.resolve(

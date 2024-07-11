@@ -2,7 +2,7 @@ import Livro from "./Livro";
 
 export default class Emprestimo {
     private readonly _dataEmprestimo: Date;
-    private _dataDevolucao?: Date;
+    private _dataDevolucao: Date | undefined;
     private _dataExpiracao: Date;
     private _encerrado: boolean;
     private _atrasado: boolean;
@@ -16,6 +16,7 @@ export default class Emprestimo {
         this._atrasado = false;
         this._ISBNLivro = ISBNLivro
         this._matriculaMembro = matriculaMembro
+        this._dataDevolucao = undefined
     }
 
     devolver(livro: Livro): void {
